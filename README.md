@@ -1,22 +1,60 @@
-# Simulador de Reator em Batelada (ISA-88) com Arduino
+# Arduino-Based Batch Reactor Simulator (ISA-88)
 
-Este projeto consiste em um simulador dinâmico de um Reator Químico em Batelada (Batch Reactor) controlado por Arduino, projetado sob os conceitos de gerenciamento de receitas e controle sequencial da norma internacional **ISA-88**.
+An Arduino-based dynamic simulator of a **Batch Chemical Reactor**, designed around the concepts of recipe management and sequential process control defined by the international **ISA-88 standard**.
 
-## ⚙️ Funcionalidades Operacionais
+The project implements a Finite State Machine (FSM) to manage the reactor's operational sequence, including material loading, thermal reaction control, product discharge, and emergency shutdown.
 
-O sistema gerencia o reator através de uma **Máquina de Estados Finitos (FSM)** dividida em 5 estágios visíveis na Interface Homem-Máquina (Display de 7 Segmentos) e na Torre de Sinalização (LED RGB):
+## ⚙️ Operational Features
 
-- **Fase 0 (Standby):** Display indica `0`. Sistema limpo e aguardando comando do operador. LED indicador em Verde (Automático) ou Azul (Manual).
-- **Fase 1 (Carga):** Display indica `1`. Simulação do preenchimento volumétrico dos reagentes (0% a 100%) monitorado via Serial.
-- **Fase 2 (Reação):** Display indica `2`. Fase crítica de controle térmico. O operador deve ajustar o potenciômetro para manter a temperatura na faixa ideal de **70°C a 90°C** por 5 segundos.
-- **Fase 3 (Descarga):** Display indica `3`. Abertura da válvula de escoamento do produto final (LED RGB pulsante).
-- **Alarme (Emergência):** Display indica `9` e LED Vermelho fixo. Ativado por intertravamento caso a temperatura ultrapasse **92°C**. O sistema é completamente bloqueado até que o reator resfrie abaixo de 60°C e o botão START seja pressionado para Reset.
+The system manages the reactor through a **Finite State Machine (FSM)** consisting of five operational states, displayed through a 7-segment display and an RGB signal tower.
 
-## 🛠️ Hardware Utilizado
+### 1. Standby (State 0)
+- Display indicates `0`.
+- System is initialized and waiting for an operator command.
+- Green LED indicates Automatic Mode; Blue LED indicates Manual Mode.
 
-- 1x Arduino Uno R3
-- 1x Display de 7 Segmentos (5161AS - Catodo Comum)
-- 1x LED RGB (Catodo Comum)
-- 1x Potenciômetro Linear de 10kΩ (Transmissor de Temperatura)
-- 2x Chaves Tácteis (Push-buttons para Start e Seleção de Modo)
-- 5x Resistores de 220Ω (Proteção dos segmentos e anodos do LED)
+### 2. Loading (State 1)
+- Display indicates `1`.
+- Simulates the volumetric filling of reactants from 0% to 100%.
+- Loading progress is monitored through the Serial Monitor.
+
+### 3. Reaction (State 2)
+- Display indicates `2`.
+- Main thermal control stage.
+- The operator must adjust a potentiometer to maintain the simulated reactor temperature within the optimal range of **70°C to 90°C for 5 seconds**.
+
+### 4. Discharging (State 3)
+- Display indicates `3`.
+- Simulates the opening of the discharge valve to release the final product.
+- RGB LED pulses to indicate the discharge operation.
+
+### 5. Emergency Alarm (State 9)
+- Display indicates `9`.
+- Red LED remains continuously illuminated.
+- An interlock mechanism is triggered if the temperature exceeds **92°C**.
+- The system remains locked until the reactor cools below **60°C** and the operator presses the START button to reset the system.
+
+## 🛠️ Hardware Components
+
+| Component | Specification | Quantity |
+|---|---|---:|
+| Microcontroller | Arduino Uno R3 | 1 |
+| 7-Segment Display | 5161AS (Common Cathode) | 1 |
+| RGB LED | Common Cathode | 1 |
+| Potentiometer | 10 kΩ Linear | 1 |
+| Push Buttons | START and Mode Selection | 2 |
+| Resistors | 220 Ω | 5 |
+
+## 🧠 Engineering Concepts
+
+This project explores practical applications of industrial automation and process engineering:
+
+- **ISA-88:** Batch process management and sequential operation.
+- **Finite State Machine (FSM):** Structured control logic and state transitions.
+- **Thermal Process Control:** Temperature monitoring and operating range enforcement.
+- **Interlocks and Safety Logic:** Emergency shutdown and reset conditions.
+- **Human-Machine Interface (HMI):** Operator feedback through visual indicators and displays.
+
+## 🎯 Project Objective
+
+To develop a low-cost educational prototype that demonstrates how industrial batch reactor operations can be represented through sequential control logic, operator interfaces, and basic safety interlocks using an Arduino microcontroller.
